@@ -7,5 +7,46 @@
 
 \begin{document}
 \section*{GDB Debugger}
+	The purpose of GDB is to allow you to see what is going on ``inside" another program while it
+	executes, or what went on the moment it crashed. It is primarily for C and C++\\
 	
+	GDB can do 4 main kinds of things:
+	\begin{enumerate}
+		\item Start your program, can be passed arguments.
+		\item Make your program stop on specified conditions.
+		\item Examine what has happened when your program stopped
+		\item Change things in your program, so you can experiment with correcting
+			the effects of one bug, to learn about others.
+	\end{enumerate}
+	The first key thing to point out is that GDB will tab complete commands, and where there is
+	ambiguity, it will list out the possible commands. Here we will display the full command
+	to be clear, but other examples may include shorthand.
+
+\section*{Running GDB}
+	To run gdb, simply use the command "gdb outfile.o" which will load the program bytecode
+	to prepare it to execute. We can also just run gdb, and then use the load command to load
+	whichever file we specify.\\
+
+	Once we have the program loaded, we can run the program by calling the ``run" command, which
+	will make the program execute and complete displaying any I/O. If your program requires
+	any arguments, add them after run as if it were normal execution.
+
+\section*{Breakpoints}
+	We can set a breakpoint to watch out for a particular string in the code. For example, 
+	we could call:
+	\begin{lstlisting}
+	(gdb) break main
+	\end{lstlisting}
+	To set a break point when the main function is called. This will halt program execution		
+	to allow us to run gdb commands on our program during runtime.
+
+\section*{next vs. step}
+	The command ``next" can be used to advance execution to the next line of the current function.
+	``Current Function" is the key word here, if we would like to advance to the next command
+	in \textbf{any} subroutine, we must instead use the ``step" command. This allows us to pass
+	over functions we know are okay, or drill down to follow the line of execution explicitly.
+
+
+
+
 \end{document}
