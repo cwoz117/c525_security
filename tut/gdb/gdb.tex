@@ -8,45 +8,98 @@
 \begin{document}
 \section*{GDB Debugger}
 	The purpose of GDB is to allow you to see what is going on ``inside" another program while it
-	executes, or what went on the moment it crashed. It is primarily for C and C++\\
-	
-	GDB can do 4 main kinds of things:
-	\begin{enumerate}
-		\item Start your program, can be passed arguments.
-		\item Make your program stop on specified conditions.
-		\item Examine what has happened when your program stopped
-		\item Change things in your program, so you can experiment with correcting
-			the effects of one bug, to learn about others.
-	\end{enumerate}
-	The first key thing to point out is that GDB will tab complete commands, and where there is
-	ambiguity, it will list out the possible commands. Here we will display the full command
-	to be clear, but other examples may include shorthand.
+	executes, or what went on the moment it crashed. It is primarily for C and C++ and can be opened with 
+	\textit{gdb} and closed with \textit{quit, or q}\\
 
-\section*{Running GDB}
-	To run gdb, simply use the command "gdb outfile.o" which will load the program bytecode
-	to prepare it to execute. We can also just run gdb, and then use the load command to load
-	whichever file we specify.\\
-
-	Once we have the program loaded, we can run the program by calling the ``run" command, which
-	will make the program execute and complete displaying any I/O. If your program requires
-	any arguments, add them after run as if it were normal execution.
-
+\section*{Useful extraneous features}
+	\begin{itemize}
+		\item \textbf{Tab Complete} commands will run the first unambiguous command. Where there is
+			ambiguity, it will list out the possible commands. Some commands (like step) are hard coded
+			to work with "s" even though other commands start with s making this ambiguous.
+		\item \textbf{Shell Access} can be done through gdb, so we do not have to exit gdb. Simply
+			prepend the word "shell" to any command line action.
+		\item \textbf{Logging} output can be set to a file, which defaults to "gdb.txt" this is achieved through
+			a few methods:
+			\begin{itemize}
+				\item \textit{set logging $<$on/off$>$} to activate.
+				\item \textit{set logging file $<$filename$>$}
+				\item \textit{show logging}
+			\end{itemize}
+		\item \textbf{Bookmarks} gdb is able to save a ``snapshot" of a programs state in certain machines, called a 
+			checkpoint. Returning to the checkmark undoes everything that happened since the save. Each checkpoint is
+			given an integer ID value, to organize which checkpoints we have.
+			\begin{itemize}
+				\item \textit{checkpoint} to save the state. Takes no arguments
+				\item \textit{info checkpoints} to view a list of checkpoints, and some status info.
+				\item \textit{restart $<$checkpoint\_ID$>$} to restore the program state.
+				\item \textit{delete checkpoint $<$checkpoint\_ID$>$}
+			\end{itemize}
+		\item \textbf{Compiler support} GDB prefers to have any code compiled with the \textit{-g} function, which 
+			generates debugging info and stores it in the object file. It can be done without, but opens up more 
+			features if it does. \textit{gcc} allows the \textit{-g} flag with the \textit{-o} flag to allow for debugging 
+			optimized code, and GDB reccommends \textbf{always} leaving the \textit{-g} flag on.
+	\end{itemize}
+\newpage
+\section*{Running Programs with GDB}
+	\begin{itemize}
+		\item \textbf{gdb start} consist of a program, and a core file or process ID. 
+			\begin{itemize}
+				\item \textit{gdb program.o core\_or\_PID} command. Note that the args are optional, and the 
+					most common is to drop the 3rd argument.
+				\item \textit{run} starts your program, if you are working on an embedded device you should 
+					use \textit{continue} instead, since your program may not have a "start" function like main.
+				\item \textit{start} is the quivilent of setting a temporary breakpoint at main, then running the program.
+				\item \textit{attach $<$pid$>$/detach} connects gdb to a running process, or detaches it after it finishes.
+				\item \textit{kill} kills the child process.
+			\end{itemize}
+		\item \textbf{System Enviroment} consists of a set of enviroment variables and their values. They 
+			conventionally record your username, home directory, terminal type, and search path for programs to 
+			run. Normally they take everything from the main gdb process, but it may be useful to change them.
+			\begin{itemize}
+				\item \textit{path $<$directory$>$} will add the directory to the front of the PATH enviroment variable. 
+					This does not change the path that GDB uses, only the inferior process (running program).
+				\item \textit{show paths} will display a list of search paths.
+				\item \textit{show enviroment} will print the print the enviroment variable ``varname" to be given to 
+					your program. If varname is not supplied, it will print all names and values of all enviroment 
+					variables given to your program.
+				\item \textit{set env varname $=$value} sets value in the varname enviroment.
+				\item \textit{target remote} allows us to perform debugging on remote targets, otherwise the program will be
+					created as a native process, under gdb on your local machine.
+				\item \textit{Arguments} can be passed to the \textit{run} command which will in turn pass them to 
+					the inferior process.
+			\end{itemize}
+		\item \textbf{Working Directory} is inherited from gdb, but can be changed with the \textit{cd} command, and we
+			can check the processes working directory with \textit{pwd}.
+		\item \textbf{I/O} \textit{info terminal} displays info recorded by gdb about the terminal modes your 
+			program is running. We can redirect a programs I/O using shell redirection: \textit{run $>$ outfile} 
+			or use the \textit{tty} command to get more leverage over I/O.
+	\end{itemize}
+	GDB does offer support for running multiple programs, including forked processes and multithreading, but this is much
+	more complex and RTFM is highly reccommended.
+\newpage
 \section*{Breakpoints}
-	We can set a breakpoint to watch out for a particular string in the code. For example, 
-	we could call:
-	\begin{lstlisting}
-	(gdb) break main
-	\end{lstlisting}
-	To set a break point when the main function is called. This will halt program execution		
-	to allow us to run gdb commands on our program during runtime.
+	The principal purposes of using debuggers are so that you can stop your program before it terminates. If your program
+	runs into trouble we can investigate and find out why. \textit{info program} can tell us specifics about the inferior process.
+	All breakpoints are given an integer name, and can be \textit{enabled} or \textit{disabled}
+	\begin{itemize}
+		\item \textbf{Breakpoint} makes your program stop whenever a certain point in the program is reached. For each
+			breakpoint, we can add conditions to control in finer detail whether a program stops.
+			\begin{itemize}
+				\item \textit{break $<$location$>$} Sets a breakpoint at location. Which can be a function name, a
+					line number, or an address of an instruction. There are many ways to set the location, RTFM for more.
+				\item \textit{break ... if $<$condition$>$} where condition can be a regex, or expression.
+				\item \textit{info breakpoints} will print a table of all breakpoints with basic status info.
+			\end{itemize}
+		\item \textbf{Watchpoint} is a special breakpoint which stops your program when the value of an expression changes.
+			This could be the value of a variable, or one or more operators combined: '$a + b$'. These are sometimes
+			called ``data breakpoints"
+			\begin{itemize}
+				\item \textit{watch [location, regex, expression, threadnum, or mask] }
+			\end{itemize}
+		\item \textbf{Catchpoint} is another breakpoint that stops when a certain event occurs, such as throwing an exception
+			(in C++) and or the loading of a library.
 
-\section*{next vs. step}
-	The command ``next" can be used to advance execution to the next line of the current function.
-	``Current Function" is the key word here, if we would like to advance to the next command
-	in \textbf{any} subroutine, we must instead use the ``step" command. This allows us to pass
-	over functions we know are okay, or drill down to follow the line of execution explicitly.
-
-
+	\end{itemize}
 
 
 \end{document}
