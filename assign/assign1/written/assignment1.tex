@@ -1,0 +1,224 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Programming/Coding Assignment
+% LaTeX Template
+%
+% This template has been downloaded from:
+% http://www.latextemplates.com
+%
+% Original author:
+% Ted Pavlic (http://www.tedpavlic.com)
+%
+% Note:
+% to fill the template out. These commands should all be removed when 
+% writing assignment content.
+%
+% This template uses a Perl script as an example snippet of code, most other
+% languages are also usable. Configure them in the "CODE INCLUSION 
+% CONFIGURATION" section.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{extramarks} % Required for headers and footers
+\usepackage[usenames,dvipsnames]{color} % Required for custom colors
+\usepackage{graphicx} % Required to insert images
+\usepackage{listings} % Required for insertion of code
+\usepackage{courier} % Required for the courier font
+
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1} % Line spacing
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+%----------------------------------------------------------------------------------------
+%	CODE INCLUSION CONFIGURATION
+%----------------------------------------------------------------------------------------
+
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0} % This is the color used for comments
+\lstloadlanguages{Perl} % Load Perl syntax for listings, for a list of other languages supported see: ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
+\lstset{language=c,
+        frame=single, % Single frame around code
+        basicstyle=\small\ttfamily, % Use small true type font
+        identifierstyle=, % Nothing special about identifiers                                         
+        showstringspaces=false, % Don't put marks in string spaces
+        tabsize=5, % 5 spaces per tab
+        numbers=left, % Line numbers on left
+        firstnumber=1, % Line numbers start with line 1
+        numberstyle=\tiny\color{Blue}, % Line numbers are blue and small
+}
+
+% Creates a new command to include a perl script, the first parameter is the filename of the script (without .pl), the second parameter is the caption
+\newcommand{\perlscript}[2]{
+\begin{itemize}
+\item[]\lstinputlisting[caption=#2,label=#1]{#1.pl}
+\end{itemize}
+}
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT STRUCTURE COMMANDS
+%	Skip this unless you know what you're doing
+%----------------------------------------------------------------------------------------
+
+% Header and footer for when a page split occurs within a problem environment
+\newcommand{\enterProblemHeader}[1]{
+\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
+\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+}
+
+% Header and footer for when a page split occurs between problem environments
+\newcommand{\exitProblemHeader}[1]{
+\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+\nobreak\extramarks{#1}{}\nobreak
+}
+
+\setcounter{secnumdepth}{0} % Removes default section numbers
+\newcounter{homeworkProblemCounter} % Creates a counter to keep track of the number of problems
+
+\newcommand{\homeworkProblemName}{}
+\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]{ % Makes a new environment called homeworkProblem which takes 1 argument (custom name) but the default is "Problem #"
+\stepcounter{homeworkProblemCounter} % Increase counter for number of problems
+\renewcommand{\homeworkProblemName}{#1} % Assign \homeworkProblemName the name of the problem
+\section{\homeworkProblemName} % Make a section in the document with the custom problem count
+\enterProblemHeader{\homeworkProblemName} % Header and footer within the environment
+}{
+\exitProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+
+\newcommand{\problemAnswer}[1]{ % Defines the problem answer command with the content as the only argument
+\noindent\framebox[\columnwidth][c]{\begin{minipage}{0.98\columnwidth}#1\end{minipage}} % Makes the box around the problem answer and puts the content inside
+}
+
+\newcommand{\homeworkSectionName}{}
+\newenvironment{homeworkSection}[1]{ % New environment for sections within homework problems, takes 1 argument - the name of the section
+\renewcommand{\homeworkSectionName}{#1} % Assign \homeworkSectionName to the name of the section from the environment argument
+\subsection{\homeworkSectionName} % Make a subsection with the custom name of the subsection
+\enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]} % Header and footer within the environment
+}{
+\enterProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+
+%----------------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\hmwkTitle}{Assignment\ \#1} 					% Assignment title
+\newcommand{\hmwkDueDate}{Monday,\ February\ 12,\ 2016}	% Due date
+\newcommand{\hmwkClass}{CPSC\ 525}	 					% Course/class
+\newcommand{\hmwkAuthorName}{Christopher Wozniak}		% Your name
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{
+\vspace{2in}
+\textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+\normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate}\\
+\vspace{3in}
+}
+
+\author{\textbf{\hmwkAuthorName}}
+\date{} % Insert date here if you want it to appear below your name
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+\begin{homeworkProblem}
+	We determine first if action taken is morally right, morally wrong, or morally obligatory. Though this is rather simple, as
+	the ethical question dictates that you are working for a company whose job is to track botnet activity. As such, you have a
+	contract with a governing body to be the authority on botnet activity. Therefore it would be morally obligatory to take action
+	against this botnet. However, what type of action should be taken into consideration? Do we simply track the botnet, knowing
+	that people (even friends) are being used by the botnet with potentially malicious intent, or do we do everything in our power
+	to shut down the botnet, regardless of the job to be performed at work?\\
+
+	We could take the action of the Egoist, seeing the events as an oppertunity for our own gain and silently track the botnet, forwarding
+	information up the chain of command and gain favor of bosses and fellow employess for work well done. Deontology would counter
+	this by stating that the act of allowing a botnet to run its DDoS activity would be unethical, as the action of watching someone commit
+	morally wrong actions is itself morally wrong, regardless of the outcome. Utilitarianism would fit into the argument with a bit of 
+	understanding: The act of tracking a botnet may lead to larger utilitarian gains if we are able to track the source. Simply downing the 
+	botnet would not stop the opponants from simply starting up another one, and tracking the botnet activity may lead to a greater
+	impact than simply stopping the botnet to protect the few slaved users, or targets of a DDoS. Agreeing with Utilitarianism would
+	be Social Justice, where the act of a social contract helps protect socitety and allows for such things as the internet to run in the 
+	first place. Such a contract allowed there to be a governing body (national, international, corporate law) which authorizes companies
+	to track botnet activity. By tracking them, we can better understand who/what is going on and how to stop the source, rather than
+	short term botnet activity.\\
+
+	Considering the examples above, the longterm plan of tracking botnet activity, regardless of the impact that a DDoS botnet can have
+	is the best action that can be taken as an employee for a security company, whose job is to track such activity. Solutions can be planned
+	and information gathered which will lead to a more informed long term solution. Simply shutting down a found botnet would lead to the 
+	opponants starting another one back up, only then they have the information that they need to improve their security. Finding the source
+	of botnet activity (the users who start it) will provide a greater long term solution which is favorable to Utilitarianism and Social Justice
+	theorists, even if deontologists would argue for inaction.
+
+\end{homeworkProblem}
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 2
+%----------------------------------------------------------------------------------------
+\begin{homeworkProblem}
+\begin{enumerate}
+	\item 
+		\begin{itemize}
+			\item \textbf{worm} - Step 7 PLC's were closed off from the internet, so stuxnet had to infect the driver software
+				which was used to maintain the PLC's on windows machines. This led to the worm spreading through local networks
+				using a printer spooler exploit, and through USB flash drives, as described below.
+			\item \textbf{link file} - The 1.001 version of Stuxnet took advantage of an exploit of the Autorun feature
+				of a flash drive, where autorun could execute code from a link file found in the flash drive. It would point to the 
+				copied stuxnet executable file, and thereby infected the machine it connected to.
+			\item \textbf{root kit} - The PLC driver on the windows machine would view memory blocks using a specific .dll, which
+				contained system calls to the device. The rootkit hid itself in another dll, stealing the name of the original, and had
+				code that emulated the system calls, but hid the virus information from the viewer on the windows device (intentionally
+				enumerating over memory blocks on a ``s7blk\_findNext()" call for example.) This dll had to be renamed, and the 
+				virus itself had to be placed in the windows registry, which is why the root kit was necessary.
+		\end{itemize}
+	\item It primarily took advantage of the connection to the PLC device. Managing what the user saw from his embedded interface, it
+		made it look as if the device connected to the computer was performing properly. It did this by overwriting the system calls in a 
+		specific .dll file (s7otbxdx.dll) with its own version, as mentioned above in the ``root kit" explanation.
+	\item The main target of stuxnet was on nuclear capabilities of Iran, attempting to slow down the refinment of nuclear material
+		by making hardware components malfunction.
+	\item  Duqu and Flame are brothers of Stuxnet, using some of the same source code but primarily used for surveillance. Flame is the 
+		stronger of the two, able to take screenshots, track skype activity, capture webcam info and set itself up as a bluetooth base
+		station allowing it to spread to wireless devices. Duqu was intended to be a precurser, gathering information on other potential
+		targets similar to the PLC's attacked with Stuxnet.
+	\item I would argue that stuxnet is a game changer. Before this nobody had attacked embedded systems before, it was also large
+		and extremely specific which denotes a virus with international versus simple criminal intent. It opened our eyes to the need
+		for computer security beyond our home desktops as the PLC devices were also used to regularly maintain our infrastructure
+		in today's modern world. It also was unprecedented in size compared to viruses before its time, showing that viruses could
+		be whole applications designed to attack rather than a few lines of corrupted code. There is also the fact that the media 
+		actually as interested in the large attack. In and of itself it helped to spread word of a threat that still exists today, with
+		our growing dependance of such devices, it could be considered a game changer simply because it brought the attention forward.
+\end{enumerate}
+\end{homeworkProblem}
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 2
+%----------------------------------------------------------------------------------------
+
+% To have just one problem per page, simply put a \clearpage after each problem
+
+\begin{homeworkProblem}
+
+\end{homeworkProblem}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
