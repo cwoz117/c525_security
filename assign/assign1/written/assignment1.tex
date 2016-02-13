@@ -206,19 +206,55 @@
 		be whole applications designed to attack rather than a few lines of corrupted code. There is also the fact that the media 
 		actually as interested in the large attack. In and of itself it helped to spread word of a threat that still exists today, with
 		our growing dependance of such devices, it could be considered a game changer simply because it brought the attention forward.
+	\item Citation
+		\begin{itemize}
+			\item https://www.symantec.com/content/en/us/enterprise/media/security\_response/whitepapers/w32\_stuxnet\_dossier.pdf
+			\item http://www.symantec.com/security\_response/writeup.jsp?docid=2010-071400-3123-99
+			\item http://www.symantec.com/connect/blogs/stuxnet-introduces-first-known-rootkit-scada-devices
+		\end{itemize}
 \end{enumerate}
 \end{homeworkProblem}
 
 %----------------------------------------------------------------------------------------
 %	PROBLEM 2
 %----------------------------------------------------------------------------------------
-
-% To have just one problem per page, simply put a \clearpage after each problem
-
+\newpage
 \begin{homeworkProblem}
+	The programs are included in the zip, sorted in two different versions.
+	\begin{itemize}
+		\item \textbf{The Process}
+			\begin{enumerate}
+				\item \textbf{Read the ELF} and determine what the executable was going to do.
+					\begin{lstlisting}
+	objdump -S helloworld-x86_64
+					\end{lstlisting}
+					This gives a list of computed assembler instuctions, which had to be stepped through.
+				\item \textbf{Look for hints} since we know what the program is trying to do, I soon found a set of
+					instructions which all pointed to one location:
+					\begin{lstlisting}
+400a64:	e9 04 01 00 00       	jmpq   400b6d <main+0x12d>
+...
+400b6d:	c9                   	leaveq
+					\end{lstlisting}
+					With this forsight it was easy to follow the branches down to the set of instructions the guards were avoiding:
+					\begin{lstlisting}
+  400b59:	bf 7c 0c 40 00       	mov    $0x400c7c,%edi				
+  400b5e:	e8 6d fb ff ff       	callq  4006d0 <puts@plt>
+					\end{lstlisting}
+			\end{enumerate}
+		\item \textbf{Version 1} uses ptrace() to change the rip register (x64 program counter) to point to the address containing
+			the required code to execute. Its example is in the /programs/ver1\_jump\_over/ folder which includes a README and 
+			makefile.
+		\item \textbf{Version 2} again uses ptrace(), however it takes the machine code seen below, and overwriting code
+			from main onwards so that when the program starts to run it immediately prints the required code. This is found in
+			/program/ver2\_overwrite/			
+			\begin{lstlisting}
+		bf 7c 0c 40 00				
+		e8 6d fb ff ff
+			\end{lstlisting}
+	\end{itemize}
 
 \end{homeworkProblem}
-
 %----------------------------------------------------------------------------------------
 
 \end{document}

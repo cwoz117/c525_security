@@ -1,0 +1,20 @@
+================================================================================
+ Author: Chris Wozniak
+ Course: CPSC525
+
+ This program creates a child thread, then uses ptrace() to overwrite the 
+ beginning of the program with the code inside the many guards at main,
+ thereby executing "Hello World!" before files need to be opened.
+
+================================================================================
+1. Run make to build the "exploit" program
+	
+	make
+
+2. Run the exploit, this should print "Hello world!" regardless of what
+   values are in file1, file2, file3, file4.
+	
+	./exploit
+
+================================================================================
+
